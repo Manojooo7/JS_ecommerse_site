@@ -28,11 +28,11 @@ button{
 .product_section{
     width: 100%;
     height: 100vh;
-    margin: 7rem auto;
     position: relative;
 }
 
 .product_container{
+    padding: 5rem 3rem;
     width: 100%;
     display: grid;
     gap: 2rem;
@@ -41,8 +41,7 @@ button{
 }
 .load_more{
     position: absolute;
-    margin-top: 3em;
-    left: 50%;
+    left: 45%;
 }
 .prodcuts_cards{
     border-radius: 15px;
