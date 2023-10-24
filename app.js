@@ -16,7 +16,7 @@ function displaySneakers(startIndex, endIndex) {
         const sneaker = sneakers[i];
 
         const productCard = document.createElement("div");
-        productCard.classList.add("prodcuts_cards");
+        productCard.classList.add("products_cards");
 
         const productImage = document.createElement("img");
         productImage.classList.add("product_img");
