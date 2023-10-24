@@ -6,7 +6,7 @@ const sneakers = [
         description: 'Introducing the Nike Air Max 720 Black Edition 2023 - the pinnacle of style, innovation, and comfort in the world of athletic footwear. Elevate your sneaker game to new heights with these cutting-edge kicks that blend iconic design with the latest technology for an unparalleled walking and running experience.',
         sizes: [5, 6, 7, 8, 9],
         color: 'color',
-        img: 'https://lh3.google.com/u/1/d/18OLAbPWAPzbQ2qhHfgghf9m7L_bQL-fA=w1366-h639-iv1'
+        img: './shoes1.png'
     },
     {
         id: 2,
@@ -71,6 +71,7 @@ const sneakers = [
         color: 'orange',
         img: './shoes10.png'
     },
+    
     {
         id: 41,
         name: 'NIKE Legend Essential 2 Training & Gym Shoes For Men (Black)',
