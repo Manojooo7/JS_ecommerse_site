@@ -12,7 +12,7 @@ body,html{
 }
 
 h1{
-    font-size: 3rem;
+    font-size: 2rem;
 }
 h2{
     font-size: 1.7rem;
@@ -97,7 +97,7 @@ button{
 }
 .product_galary{
     width: 100%;
-    height: 70vh;
+    height: 80vh;
     overflow: hidden;
 }
 .product_galary img{
@@ -116,7 +116,8 @@ button{
 .size{
     display: flex;
     flex-direction: column;
-    width: 60%;
+    margin-top: 20px;
+    width: 70%;
     height: 5rem;
     justify-content: space-between;
     position: relative;
@@ -141,8 +142,7 @@ button{
     display: flex;
     flex-direction: column;
     width: 60%;
-    margin-top: 20px;
-    height: 5rem;
+    margin-top: 50px;
 }
 span{
     cursor: pointer;
@@ -159,7 +159,7 @@ span{
 .byuing_option{
     margin-top: 25px;
     align-items: center;
-    width: 55%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
 }

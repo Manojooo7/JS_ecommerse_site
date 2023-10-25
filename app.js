@@ -45,6 +45,11 @@ function displaySneakers(startIndex, endIndex) {
         productCard.appendChild(otherDetails);
         productCard.appendChild(addToCartButton);
 
+        // Create an event listener to redirect to the product details page
+        productCard.addEventListener("click", () => {
+            redirectToProductDetailsPage(sneaker.id); // Pass the product's unique identifier
+        });
+
         productContainer.appendChild(productCard);
     }
 
@@ -62,6 +67,13 @@ function displaySneakers(startIndex, endIndex) {
     By keeping track of the total count of displayed sneakers, you can use this information to determine when all sneakers have been displayed and hide the "Load More" button when necessary.
     */
     displayedSneakers += endIndex - startIndex;
+}
+
+// Function to redirect to the product details page
+function redirectToProductDetailsPage(productId) {
+    // Construct the URL for the product details page and pass the product ID as a parameter
+    const productDetailsURL = `product_detail.html?product=${productId}`;
+    window.location.href = productDetailsURL;
 }
 
 // Initial load of the first 8 sneakers
@@ -85,4 +97,18 @@ For example, if `startIndex` is 8 and `endIndex` is 16, it means you want to dis
 
 The purpose of this line is to call the `displaySneakers` function with the appropriate arguments to load and display the next batch of sneakers when the "Load More" button is clicked. This allows you to control which sneakers are displayed based on the range specified by `startIndex` and `endIndex`.
 */
+
+// now i want tto write a function which can get the product data for the specific product id
+// function getProductData(productId) {
+//     const product = sneakers.find((sneaker) => sneaker.id === productId);
+//     return product;
+// }
+// console.log(product);
+// getProductData(1);
+
+
+// now i want to write a function which can populate the product details
+
+
+
 
