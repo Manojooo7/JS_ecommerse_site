@@ -14,7 +14,10 @@ body,html{
 h1{
     font-size: 3rem;
 }
-
+h2{
+    font-size: 1.7rem;
+    text-transform: capitalize;
+}
 p{
     font-size: 1rem;
 }
@@ -32,7 +35,8 @@ button{
     border-radius: 25px;
     border: none;
     cursor: pointer;
-    
+    background-color: #000;
+    color: #fff;
 }
 
 .product_section{
@@ -111,26 +115,57 @@ button{
 
 .size{
     display: flex;
+    flex-direction: column;
     width: 60%;
-    margin-top: 20px;
+    height: 5rem;
     justify-content: space-between;
-    align-items: center;
     position: relative;
 }
-
-.size span{
+.size p{
+    font-size: 1.7rem;
+}
+.sizes_container{
+    display: flex;
+    margin-top: 20px;
+    width: 90%;
+    justify-content: space-between;
+}
+.sizes_container .sizes{
     padding: 15px 20px;
     text-align: center;
     border-radius: 50%;
     background-color: #d8d3d8;
     font-size: 1.2rem;
 }
-
+.color{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-top: 20px;
+    height: 5rem;
+}
+span{
+    cursor: pointer;
+}
 .color span{
-    
-    padding: 15px 20px;
-    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background-color: #000;
     font-size: 1.2rem;
+}
+.byuing_option{
+    margin-top: 25px;
+    align-items: center;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+.byuing_option h1{
+    font-size: 2.5rem;
+}
+.byuing_option button{
+    padding: 18px 60px;
 }
