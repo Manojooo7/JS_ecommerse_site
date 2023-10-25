@@ -159,7 +159,7 @@ span{
 .byuing_option{
     margin-top: 25px;
     align-items: center;
-    width: 50%;
+    width: 55%;
     display: flex;
     justify-content: space-between;
 }
@@ -168,4 +168,8 @@ span{
 }
 .byuing_option button{
     padding: 18px 60px;
+    transition: all 0.3s ease;
+}
+.byuing_option button:hover{
+    background-color: #3b3b3b;
 }
