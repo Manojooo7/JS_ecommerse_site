@@ -84,7 +84,7 @@ loadMoreButton.addEventListener("click", () => {
     const startIndex = displayedSneakers;
     const endIndex = startIndex + 8;
     displaySneakers(startIndex, endIndex);
-});
+});``
 
 /*
 The line `displaySneakers(startIndex, endIndex);` in the event listener is a function call. Let me explain what this line does:
