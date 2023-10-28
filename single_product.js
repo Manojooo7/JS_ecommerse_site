@@ -39,11 +39,12 @@ function populateProductDetails() {
         for (let i = 0; i < product.color.length; i++) {
             const color = document.createElement("span");
             color.classList.add("colors");
-            const gaveColor = document.querySelector(".colors");
-            gaveColor.style.backgroundColor = product.color[i];
+            color.style.backgroundColor = product.color[i];
             console.log(product.color[i]);
             // console.log(color);
             colors.appendChild(color);
+            //lenght of the coloe array id 2 so why it is showing 3 times
+            
 
         }
         // Add more code to populate other details as needed
