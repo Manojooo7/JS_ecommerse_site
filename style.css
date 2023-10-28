@@ -147,15 +147,24 @@ button{
 span{
     cursor: pointer;
 }
+.color_container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 60%;
+    height: 5rem;
+    position: relative;
+}
 .color span{
     margin-top: 20px;
-    display: flex;
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #000;
     font-size: 1.2rem;
 }
+/* .colors{
+    background-color: #000;
+} */
 .byuing_option{
     margin-top: 25px;
     align-items: center;
