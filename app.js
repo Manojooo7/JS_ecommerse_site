@@ -2,6 +2,23 @@
 // Dom selection
 const productContainer = document.querySelector(".product_container");
 const loadMoreButton = document.querySelector(".load_more");
+const qtyAddButton = document.querySelector(".qty_add");
+const qtyMinusButton = document.querySelector(".qty_less");
+const productQty = document.querySelector(".qty_holder");
+// qty increase and decrease function
+qtyAddButton.addEventListener("click", () => {
+    let qty = parseInt(productQty.value);
+    qty++;
+    productQty.value = qty;
+});
+
+qtyMinusButton.addEventListener("click", () => {
+    let qty = parseInt(productQty.value);
+    if (qty > 1) {
+        qty--;
+        productQty.value = qty;
+    }
+});
 let displayedSneakers = 0; // Track the number of sneakers already displayed
 
 // Function to create and display product cards
@@ -84,7 +101,7 @@ loadMoreButton.addEventListener("click", () => {
     const startIndex = displayedSneakers;
     const endIndex = startIndex + 8;
     displaySneakers(startIndex, endIndex);
-});``
+}); ``
 
 /*
 The line `displaySneakers(startIndex, endIndex);` in the event listener is a function call. Let me explain what this line does:

@@ -6,6 +6,31 @@ const pageTitle = document.getElementById("pageTitle");
 const productPrice = document.querySelector(".product_price");
 const sizes = document.querySelector(".sizes_container");
 const colors = document.querySelector(".color_container");
+const qtyAddButton = document.querySelector(".qty_add");
+const qtyMinusButton = document.querySelector(".qty_less");
+const productQty = document.querySelector(".qty_holder");
+
+
+// qty increase and decrease function
+
+
+qtyAddButton.addEventListener("click", () => {
+    let qty = parseInt(productQty.value);
+    qty++;
+    productQty.value = qty;
+});
+
+qtyMinusButton.addEventListener("click", () => {
+    let qty = parseInt(productQty.value);
+    if (qty > 1) {
+        qty--;
+        productQty.value = qty;
+    }
+});
+
+
+
+
 // Function to populate product details
 function populateProductDetails() {
     // Extract the product ID from the URL parameters
@@ -36,17 +61,17 @@ function populateProductDetails() {
             sizes.appendChild(size);
         }
         // Loop through the colors array and create a span element for each color
-        for (let i = 0; i < product.color.length; i++) {
-            const color = document.createElement("span");
-            color.classList.add("colors");
-            color.style.backgroundColor = product.color[i];
-            console.log(product.color[i]);
-            // console.log(color);
-            colors.appendChild(color);
-            //lenght of the coloe array id 2 so why it is showing 3 times
-            
+        // for (let i = 0; i < product.color.length; i++) {
+        //     const color = document.createElement("span");
+        //     color.classList.add("colors");
+        //     color.style.backgroundColor = product.color[i];
+        //     console.log(product.color[i]);
+        //     // console.log(color);
+        //     colors.appendChild(color);
+        //     //lenght of the coloe array id 2 so why it is showing 3 times
 
-        }
+
+        // }
         // Add more code to populate other details as needed
     } else {
         // Handle the case where the product with the specified ID was not found
