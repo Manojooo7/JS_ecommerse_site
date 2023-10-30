@@ -140,11 +140,13 @@ button{
 .cart_overlay{
     width: 60%;
     height: 100vh;
-    background-color: rgba(77, 206, 60, 0.096);
+    background-color: rgba(0, 0, 0, 0.301);
+    z-index: 5;
 }
 
 .hidden{
     display: none;
+    transition: 0.3s ease-in-out;
 }
 
 .cart_container{
@@ -152,6 +154,16 @@ button{
     background-color: red;
     z-index: 6;
     padding: 3rem;
+}
+.cart_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.cart_close{
+    font-size: 2rem;
+    cursor: pointer;
 }
 .cart_item_titles{
     margin-top: 25px;
@@ -167,6 +179,9 @@ button{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #fffffff3;
+    padding: 20px 20px;
+    border-radius: 20px;
 
 }
 

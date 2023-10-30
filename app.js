@@ -5,6 +5,25 @@ const loadMoreButton = document.querySelector(".load_more");
 const qtyAddButton = document.querySelector(".qty_add");
 const qtyMinusButton = document.querySelector(".qty_less");
 const productQty = document.querySelector(".qty_holder");
+const cartButton = document.querySelector(".cart_button");
+const cartCloseButon = document.querySelector(".cart_close");
+const cartPage = document.querySelector(".cart_page");
+const cartOverlay = document.querySelector(".cart_overlay");
+
+// Cart page 
+
+cartButton.addEventListener("click", () => {
+    cartPage.classList.toggle("hidden");
+});
+
+cartCloseButon.addEventListener("click", () => {
+    cartPage.classList.toggle("hidden");
+})
+
+cartOverlay.addEventListener("click", () => {
+    cartPage.classList.toggle("hidden");
+})
+
 // qty increase and decrease function
 qtyAddButton.addEventListener("click", () => {
     let qty = parseInt(productQty.value);
@@ -115,16 +134,6 @@ For example, if `startIndex` is 8 and `endIndex` is 16, it means you want to dis
 The purpose of this line is to call the `displaySneakers` function with the appropriate arguments to load and display the next batch of sneakers when the "Load More" button is clicked. This allows you to control which sneakers are displayed based on the range specified by `startIndex` and `endIndex`.
 */
 
-// now i want tto write a function which can get the product data for the specific product id
-// function getProductData(productId) {
-//     const product = sneakers.find((sneaker) => sneaker.id === productId);
-//     return product;
-// }
-// console.log(product);
-// getProductData(1);
-
-
-// now i want to write a function which can populate the product details
 
 
 
