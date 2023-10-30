@@ -212,6 +212,15 @@ button{
     width: 100%;
 }
 
+.remove_item{
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.cart_qty-icon{
+    cursor: pointer;
+}
+
 /* product details page */
 .SP_container{
     width: 100%;

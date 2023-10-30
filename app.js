@@ -2,42 +2,76 @@
 // Dom selection
 const productContainer = document.querySelector(".product_container");
 const loadMoreButton = document.querySelector(".load_more");
-const qtyAddButton = document.querySelector(".qty_add");
-const qtyMinusButton = document.querySelector(".qty_less");
-const productQty = document.querySelector(".qty_holder");
+const qtyAddButtons = document.getElementsByClassName("qty_add");
+const qtyLessButtons = document.getElementsByClassName("qty_less");
+// const productQty = document.querySelector(".qty_holder");
 const cartButton = document.querySelector(".cart_button");
 const cartCloseButon = document.querySelector(".cart_close");
 const cartPage = document.querySelector(".cart_page");
 const cartOverlay = document.querySelector(".cart_overlay");
+const cartItem = document.getElementsByClassName("cart_item");
+const removeCartItem = document.getElementsByClassName("remove_item");
 
 // Cart page 
 
-cartButton.addEventListener("click", () => {
+// cart page opening and closing function
+const cartPageToggle = function () {
     cartPage.classList.toggle("hidden");
+
+}
+
+cartButton.addEventListener("click", () => {
+    cartPageToggle()
 });
 
 cartCloseButon.addEventListener("click", () => {
-    cartPage.classList.toggle("hidden");
+    cartPageToggle()
 })
 
 cartOverlay.addEventListener("click", () => {
-    cartPage.classList.toggle("hidden");
+    cartPageToggle()
 })
 
-// qty increase and decrease function
-qtyAddButton.addEventListener("click", () => {
-    let qty = parseInt(productQty.value);
-    qty++;
-    productQty.value = qty;
-});
+// cart item removing function
 
-qtyMinusButton.addEventListener("click", () => {
-    let qty = parseInt(productQty.value);
-    if (qty > 1) {
-        qty--;
-        productQty.value = qty;
-    }
-});
+for (let i = 0; i < removeCartItem.length; i++) {
+    removeCartItem[i].addEventListener("click", (event) => {
+        let removedItem = event.target
+        removedItem.parentElement.remove();
+    });
+}
+
+
+// cart quantity increasing and decreasing function
+
+for (let i = 0; i < qtyAddButtons.length; i++) {
+    document.addEventListener("DOMContentLoaded", function () {
+
+        qtyAddButtons[i].addEventListener("click", (event) => {
+            const input = event.target.parentElement.getElementsByClassName("qty_holder");
+            console.log(input);
+            let qty = parseInt(input.value);
+            console.log(qty);
+            qty++;
+            input.value = qty;
+            console.log(input.value);
+        });
+
+        qtyLessButtons[i].addEventListener("click", (event) => {
+            const input = event.target.parentElement.getElementsByClassName("qty_holder");
+            let qty = parseInt(input.value) || 0;
+            if (qty > 1) {
+                qty--;
+                input.value = qty;
+            }
+        });
+    })
+}
+
+
+
+// displaying sneakers function
+
 let displayedSneakers = 0; // Track the number of sneakers already displayed
 
 // Function to create and display product cards
