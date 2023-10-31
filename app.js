@@ -12,6 +12,7 @@ const cartOverlay = document.querySelector(".cart_overlay");
 const cartItem = document.getElementsByClassName("cart_item");
 const removeCartItem = document.getElementsByClassName("remove_item");
 
+// console.log(productQty.value);
 // Cart page 
 
 // cart page opening and closing function
@@ -34,39 +35,40 @@ cartOverlay.addEventListener("click", () => {
 
 // cart item removing function
 
+const cartItemRemoveFunction = function () {
 for (let i = 0; i < removeCartItem.length; i++) {
     removeCartItem[i].addEventListener("click", (event) => {
         let removedItem = event.target
         removedItem.parentElement.remove();
     });
 }
+}
+
+cartItemRemoveFunction();
 
 
 // cart quantity increasing and decreasing function
 
-for (let i = 0; i < qtyAddButtons.length; i++) {
-    document.addEventListener("DOMContentLoaded", function () {
+// Add a click event listener to a common parent container for all cart items
+cartPage.addEventListener("click", function (event) {
+    // Check if the clicked element has the class "qty_add" (increase) or "qty_less" (decrease)
+    if (event.target.classList.contains("qty_add")) {
+        // Get the input element for the clicked cart item
+        const qtyInput = event.target.parentElement.querySelector(".qty_holder");
 
-        qtyAddButtons[i].addEventListener("click", (event) => {
-            const input = event.target.parentElement.getElementsByClassName("qty_holder");
-            console.log(input);
-            let qty = parseInt(input.value);
-            console.log(qty);
-            qty++;
-            input.value = qty;
-            console.log(input.value);
-        });
+        // Increase the quantity
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+    } else if (event.target.classList.contains("qty_less")) {
+        // Get the input element for the clicked cart item
+        const qtyInput = event.target.parentElement.querySelector(".qty_holder");
 
-        qtyLessButtons[i].addEventListener("click", (event) => {
-            const input = event.target.parentElement.getElementsByClassName("qty_holder");
-            let qty = parseInt(input.value) || 0;
-            if (qty > 1) {
-                qty--;
-                input.value = qty;
-            }
-        });
-    })
-}
+        // Decrease the quantity, but not below 1
+        const currentValue = parseInt(qtyInput.value);
+        if (currentValue > 1) {
+            qtyInput.value = currentValue - 1;
+        }
+    }   
+});
 
 
 
