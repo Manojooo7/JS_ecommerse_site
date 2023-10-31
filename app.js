@@ -9,11 +9,78 @@ const cartButton = document.querySelector(".cart_button");
 const cartCloseButon = document.querySelector(".cart_close");
 const cartPage = document.querySelector(".cart_page");
 const cartOverlay = document.querySelector(".cart_overlay");
-const cartItem = document.getElementsByClassName("cart_item");
-const removeCartItem = document.getElementsByClassName("remove_item");
+// const cartItem = document.getElementsByClassName("cart_item");
 
 // console.log(productQty.value);
 // Cart page 
+
+// dom content loaded
+
+if (document.readyState == "loading") {
+    document.addEventListener("DOMContentLoaded", ready);
+
+} else {
+    ready()
+}
+
+function ready() {
+    // add to cart function
+
+    const addToCartButton = document.getElementsByClassName("add_to_cart");
+    // console.log(addToCartButton);
+
+    for (let i = 0; i < addToCartButton.length; i++) {
+        button = addToCartButton[i];
+        button.addEventListener("click", addedToCart);
+    }
+
+    function addedToCart(event) {
+        let button = event.target;
+        let shopProducts = button.parentElement;
+        let title = shopProducts.getElementsByClassName("product_title")[0].innerText;
+        let price = shopProducts.getElementsByClassName("price")[0].innerText;
+        let imgSrc = shopProducts.getElementsByClassName("product_img")[0].src;
+        addItemToCart(title, price, imgSrc);
+    }
+
+    function addItemToCart(title, price, imgSrc) {
+        let cartRow = document.createElement("div");
+        // document.getElementsByClassName("cart_items")[0];
+        let cartContainer = document.getElementsByClassName("cart_item_container")[0]
+        cartContainer.append(cartRow);
+        let cartContent = `
+        <div class="cart_item">
+        <div class="cart_item_img">
+            <img src="${imgSrc}" alt="${title}">
+        </div>
+        <p class="cart_item_name">${title}</p>
+        <div class="cart_qty">
+            <i class="ri-subtract-line cart_qty-icon qty_less"></i>
+            <input class="qty_holder" type="number" min="1" value="1">
+            <i class="ri-add-line cart_qty-icon qty_add"></i>
+        </div>
+        <p class="cat_item_price">${price}</p>
+        <i class="ri-delete-bin-6-fill remove_item"></i>
+        </div>
+        `
+        cartRow.innerHTML = cartContent;
+    }
+    // cart item removing function
+    const removeCartItem = document.getElementsByClassName("remove_item");
+    // console.log(removeCartItem);
+    const cartItemRemoveFunction = function () {
+        for (let i = 0; i < removeCartItem.length; i++) {
+            removeCartItem[i].addEventListener("click", (event) => {
+                let removedItem = event.target
+                removedItem.parentElement.remove();
+            });
+        }
+    }
+    cartItemRemoveFunction();
+}
+
+
+
 
 // cart page opening and closing function
 const cartPageToggle = function () {
@@ -33,18 +100,7 @@ cartOverlay.addEventListener("click", () => {
     cartPageToggle()
 })
 
-// cart item removing function
 
-const cartItemRemoveFunction = function () {
-for (let i = 0; i < removeCartItem.length; i++) {
-    removeCartItem[i].addEventListener("click", (event) => {
-        let removedItem = event.target
-        removedItem.parentElement.remove();
-    });
-}
-}
-
-cartItemRemoveFunction();
 
 
 // cart quantity increasing and decreasing function
@@ -67,8 +123,9 @@ cartPage.addEventListener("click", function (event) {
         if (currentValue > 1) {
             qtyInput.value = currentValue - 1;
         }
-    }   
+    }
 });
+
 
 
 
@@ -118,7 +175,7 @@ function displaySneakers(startIndex, endIndex) {
         productCard.appendChild(addToCartButton);
 
         // Create an event listener to redirect to the product details page
-        productCard.addEventListener("click", () => {
+        productImage.addEventListener("click", () => {
             redirectToProductDetailsPage(sneaker.id); // Pass the product's unique identifier
         });
 
