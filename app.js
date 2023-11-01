@@ -40,6 +40,7 @@ function ready() {
         let title = shopProducts.getElementsByClassName("product_title")[0].innerText;
         let price = shopProducts.getElementsByClassName("price")[0].innerText;
         let imgSrc = shopProducts.getElementsByClassName("product_img")[0].src;
+
         addItemToCart(title, price, imgSrc);
     }
 
@@ -59,24 +60,31 @@ function ready() {
             <input class="qty_holder" type="number" min="1" value="1">
             <i class="ri-add-line cart_qty-icon qty_add"></i>
         </div>
-        <p class="cat_item_price">${price}</p>
+        <p class="cat_item_price">${price}</p>  
+        </p>
         <i class="ri-delete-bin-6-fill remove_item"></i>
         </div>
         `
         cartRow.innerHTML = cartContent;
+        const quantityInput = cartRow.getElementsByClassName('qty_holder')[0].value;
+        quantityInput.addEventListener('input', () => {
+            updateTotalPrice(cartRow, price);
+        });
+        
+        // Calculate and display the initial total price
+        updateTotalPrice(cartRow, price);
     }
-    // cart item removing function
-    const removeCartItem = document.getElementsByClassName("remove_item");
-    // console.log(removeCartItem);
-    const cartItemRemoveFunction = function () {
-        for (let i = 0; i < removeCartItem.length; i++) {
-            removeCartItem[i].addEventListener("click", (event) => {
-                let removedItem = event.target
-                removedItem.parentElement.remove();
-            });
+    // Function to update the total price based on quantity
+        function updateTotalPrice(cartRow, price) {
+            const quantityInput = cartRow.querySelector('.qty_holder');
+            const totalPriceElement = cartRow.querySelector('.cat_item_price');
+            
+            const quantity = parseInt(quantityInput.value);
+            const total = quantity * price;
+            console.log(total);
+            
+            totalPriceElement.textContent = total; // Display the total with two decimal places
         }
-    }
-    cartItemRemoveFunction();
 }
 
 
@@ -123,6 +131,9 @@ cartPage.addEventListener("click", function (event) {
         if (currentValue > 1) {
             qtyInput.value = currentValue - 1;
         }
+    } else if (event.target.classList.contains("remove_item")) {
+        // Remove the cart item from the DOM
+        event.target.parentElement.remove();
     }
 });
 
