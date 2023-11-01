@@ -195,11 +195,12 @@ button{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 20%;
+    width: 30%;
+    height: 2.5rem;
 }
 .cart_qty input{
-    width: 40%;
-    height: 80%;
+    width: 50%;
+    height: 100%;
     text-align: center;
 }
 
@@ -345,17 +346,7 @@ span{
     text-align: center;
     font-size: 1rem;
 }
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
 
 .qty i {
     font-size: 1.5rem;
