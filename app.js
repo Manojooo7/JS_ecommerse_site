@@ -37,7 +37,8 @@ function ready() {
     function addedToCart(event) {
         let button = event.target;
         let shopProducts = button.parentElement;
-        let title = shopProducts.getElementsByClassName("product_title")[0].innerText.slice(4);
+        let cartItemName = shopProducts.getElementsByClassName("product_title")[0].innerText.split(' ').slice(0, 4).join(' ');
+        let title = cartItemName;
         let price = shopProducts.getElementsByClassName("price")[0].innerText;
         let imgSrc = shopProducts.getElementsByClassName("product_img")[0].src;
 
@@ -56,7 +57,7 @@ function ready() {
         </div>
         <p class="cart_item_name">${title}</p>
         <div class="cart_qty">
-            <input class="qty_holder" type="number" min="1" value="2">
+            <input class="qty_holder" type="number" value="1">
         </div>
         <p class="cat_item_price">${price}</p>  
         </p>
@@ -118,33 +119,46 @@ cartOverlay.addEventListener("click", () => {
 
 // cart quantity increasing and decreasing function
 
-// // Add a click event listener to a common parent container for all cart items
-// cartPage.addEventListener("click", function (event) {
-//     // Check if the clicked element has the class "qty_add" (increase) or "qty_less" (decrease)
-//     if (event.target.classList.contains("qty_add")) {
-//         // Get the input element for the clicked cart item
-//         const qtyInput = event.target.parentElement.querySelector(".qty_holder");
-
-//         // Increase the quantity
-//         qtyInput.value = parseInt(qtyInput.value) + 1;
-
-//         cartQty = parseInt(qtyInput.value);
-//     } else if (event.target.classList.contains("qty_less")) {
-//         // Get the input element for the clicked cart item
-//         const qtyInput = event.target.parentElement.querySelector(".qty_holder");
-
-//         // Decrease the quantity, but not below 1
-//         const currentValue = parseInt(qtyInput.value);
-//         if (currentValue > 1) {
-//             qtyInput.value = currentValue - 1;
-//             cartQty = parseInt(qtyInput.value);
-
-//         }
-//     } else if (event.target.classList.contains("remove_item")) {
-//         // Remove the cart item from the DOM
-//         event.target.parentElement.remove();
-//     }
-// });
+// Add a click event listener to a common parent container for all cart items
+cartPage.addEventListener("click", function (event) {
+    // Check if the clicked element has the class "qty_add" (increase) or "qty_less" (decrease)
+    // if (event.target.classList.contains("qty_add")) {
+    //     // Get the input element for the clicked cart item
+    
+    //     // Increase the quantity
+    //     qtyInput.value = parseInt(qtyInput.value) + 1;
+    
+    //     cartQty = parseInt(qtyInput.value);
+    // } 
+    // else if (event.target.classList.contains("qty_less")) {
+        //     // Get the input element for the clicked cart item
+        //     const qtyInput = event.target.parentElement.querySelector(".qty_holder");
+        
+        //     // Decrease the quantity, but not below 1
+        //     if (currentValue > 1) {
+            //         qtyInput.value = currentValue - 1;
+            //         cartQty = parseInt(qtyInput.value);
+            
+            //     }
+    const qtyInput = event.target.parentElement.querySelector(".qty_holder");
+    const cartItemRemoveFunction = function () {  
+     if (event.target.classList.contains("remove_item")) {
+        // Remove the cart item from the DOM
+        event.target.parentElement.remove();
+    }
+    }
+    cartItemRemoveFunction();
+    const currentValue = parseInt(qtyInput.value);
+    console.log(currentValue);
+    //  if (event.target.classList.contains("remove_item")) {
+    //     // Remove the cart item from the DOM
+    //     event.target.parentElement.remove();
+    // }else 
+    if (currentValue < 1) {
+        console.log("value is 0");
+        cartItemRemoveFunction();
+        }
+});
 
 
 
