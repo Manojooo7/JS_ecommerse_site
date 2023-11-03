@@ -39,7 +39,9 @@ button{
     color: #fff;
 }
 
-
+.o_hidden{
+    overflow: hidden;
+}
 
 /* home page */
 
