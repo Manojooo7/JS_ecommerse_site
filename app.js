@@ -5,17 +5,12 @@ const loadMoreButton = document.querySelector(".load_more");
 const qtyAddButtons = document.getElementsByClassName("qty_add");
 const qtyLessButtons = document.getElementsByClassName("qty_less");
 const htmlBody = document.getElementById('body')
-// const productQty = document.querySelector(".qty_holder");
 const cartButton = document.querySelector(".cart_button");
 const cartCloseButton = document.querySelector(".cart_close");
 const cartPage = document.querySelector(".cart_page");
 const cartOverlay = document.querySelector(".cart_overlay");
-// const cartItem = document.getElementsByClassName("cart_item");
 
-// console.log(productQty.value);
-// Cart page 
 
-// dom content loaded
 
 if (document.readyState == "loading") {
     document.addEventListener("DOMContentLoaded", ready);
@@ -47,14 +42,14 @@ function ready() {
         let imgSrc = shopProducts.getElementsByClassName("product_img")[0].src;
         addItemToCart(title, price, imgSrc);
 
-        // Calculate the total price for this product based on its price and quantity
-        const quantity = 1; // Replace with the actual quantity selected
-        const productTotalPrice = parseFloat(price) * quantity;
-        // Update the total price variable
-        totalPrice += productTotalPrice;
+        // // Calculate the total price for this product based on its price and quantity
+        // const quantity = 1; // Replace with the actual quantity selected
+        // const productTotalPrice = parseFloat(price) * quantity;
+        // // Update the total price variable
+        // totalPrice += productTotalPrice;
 
-        // Update the total price display
-        updateTotalPriceDisplay();
+        // // Update the total price display
+        // updateTotalPriceDisplay();
     }
 
     function addItemToCart(title, price, imgSrc) {
@@ -69,7 +64,7 @@ function ready() {
         </div>
         <p class="cart_item_name">${title}</p>
         <div class="cart_qty">
-            <input class="qty_holder" type="number" value="1">
+            <input class="qty_holder" type="number" min"1" value="1">
         </div>
         <p class="cat_item_price">${price}</p>  
         </p>
@@ -78,56 +73,76 @@ function ready() {
         `
         cartRow.innerHTML = cartContent;
     }
-    function updateTotalPriceDisplay() {
-        const totalPriceElement = document.querySelector('.cart_total');
-        console.log(totalPrice);
-        totalPriceElement.textContent = `₹${totalPrice.toFixed(2)}`;
-    }
+    // function updateTotalPriceDisplay() {
+    //     const totalPriceElement = document.querySelector('.cart_total');
+    //     console.log(totalPrice);
+    //     totalPriceElement.textContent = `₹${totalPrice.toFixed(2)}`;
+    // }
 
     // cart item remove function
     cartPage.addEventListener("click", function (event) {
         const qtyInput = event.target.parentElement.querySelector(".qty_holder");
         const currentValue = parseInt(qtyInput.value);
         // cartItemRemoveFunction();
-        const cartItemRemoveFunction = function () {
+        // const cartItemRemoveFunction = function () {
             if (event.target.classList.contains("remove_item")) {
                 // Remove the cart item from the DOM
                 let cartItem = event.target.parentElement
                 cartItem.remove();
-            } if (currentValue < 1) {
+            } 
+            if (currentValue < 1) {
                 let cartItem = event.target.parentElement.parentElement
                 cartItem.remove();
-
             }
-            if (event.target.classList.contains("qty_holder")) {
-                updateTotalPrice();
-            }
-        }
-        cartItemRemoveFunction();
+            // if (event.target.classList.contains("qty_holder")) {
+            //     updateTotalPrice();
+            // }
+        // }
+        // cartItemRemoveFunction();
 
     });
 
-    // Function to update the total price when quantity changes
-    function updateTotalPrice() {
-        totalPrice = 0;
-        const quantityInputs = document.querySelectorAll(".qty_holder");
-        quantityInputs.forEach(input => {
-            // const productRow = input.closest(".cart_row");
-            const productRow = input.parentElement.parentElement; // Get the parent cart_item
-            const productPriceElement = productRow.querySelector(".cat_item_price");
-            const productPrice = parseFloat(productPriceElement.textContent.replace('₹', ''));
-            const productQuantity = parseInt(input.value);
-            const productTotalPrice = productPrice * productQuantity;
-            totalPrice += productTotalPrice;
-            // Update the displayed price for the item in the cart
-            productPriceElement.textContent = `₹${productTotalPrice.toFixed(2)}`;
-        });
 
-        // Update the total price display
-        updateTotalPriceDisplay();
-    }
+
+    // function updateTotalPrice() {
+    //     totalPrice = 0;
+    //     const quantityInputs = document.querySelectorAll(".qty_holder");
+    //     quantityInputs.forEach(input => {
+    //         // const productRow = input.closest(".cart_row");
+    //         const productRow = input.parentElement.parentElement; // Get the parent cart_item
+    //         const productPriceElement = productRow.querySelector(".cat_item_price");
+    //         const productPrice = parseFloat(productPriceElement.textContent.replace('₹', ''));
+    //         const productQuantity = parseInt(input.value);
+    //         const productTotalPrice = productPrice * productQuantity;
+    //         totalPrice += productTotalPrice;
+    //         // Update the displayed price for the item in the cart
+    //         productPriceElement.textContent = `₹${productTotalPrice.toFixed(2)}`;
+    //     });
+
+    //     // Update the total price display
+    //     updateTotalPriceDisplay();
+    // }
 
 }
+
+
+    // Function to update the total price when quantity changes
+    function updateCartTotal(){
+        let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
+        let cartRows = cartItemContainer.getElementsByClassName("cart_item");
+        let total = 0;
+        for (let i = 0; i < cartRows.length; i++) {
+            let cartRow = cartRows[i];
+            let priceElement = cartRow.getElementsByClassName("cat_item_price")[0];
+            let quantityElement = cartRow.getElementsByClassName("qty_holder")[0];
+            let price = parseFloat(priceElement.innerText.replace("₹", ""));
+            let quantity = quantityElement.value;
+            total = total + (price * quantity);
+        }
+        total = Math.round(total * 100) / 100;
+        document.getElementsByClassName("cart_total")[0].innerText = "₹" + total;
+    }
+    updateCartTotal();
 
 
 
