@@ -21,17 +21,32 @@ if (document.readyState == "loading") {
 
 let totalPrice = 0;
 function ready() {
-
-
     // add to cart function
-
     const addToCartButton = document.getElementsByClassName("add_to_cart");
-    // console.log(addToCartButton);
 
     for (let i = 0; i < addToCartButton.length; i++) {
         button = addToCartButton[i];
         button.addEventListener("click", addedToCart);
     }
+
+    // cart item remove function
+    cartPage.addEventListener("click", function (event) {
+            if (event.target.classList.contains("remove_item")) {
+                // Remove the cart item from the DOM
+                let cartItem = event.target.parentElement
+                cartItem.remove();
+                updateCartTotal();
+            }
+    });
+
+    let cartQty = document.getElementsByClassName("qty_holder");
+    for (let i = 0; i < cartQty.length; i++) {
+        let input = cartQty[i];
+        input.addEventListener("change", quantityChanged);
+    }
+
+} // end of ready function
+
 
     function addedToCart(event) {
         let button = event.target;
@@ -41,98 +56,51 @@ function ready() {
         let price = shopProducts.getElementsByClassName("price")[0].innerText;
         let imgSrc = shopProducts.getElementsByClassName("product_img")[0].src;
         addItemToCart(title, price, imgSrc);
-
-        // // Calculate the total price for this product based on its price and quantity
-        // const quantity = 1; // Replace with the actual quantity selected
-        // const productTotalPrice = parseFloat(price) * quantity;
-        // // Update the total price variable
-        // totalPrice += productTotalPrice;
-
-        // // Update the total price display
-        // updateTotalPriceDisplay();
+        updateCartTotal();
     }
 
     function addItemToCart(title, price, imgSrc) {
         let cartRow = document.createElement("div");
         // document.getElementsByClassName("cart_items")[0];
         let cartContainer = document.getElementsByClassName("cart_item_container")[0]
-        cartContainer.append(cartRow);
-        let cartContent = `
-        <div class="cart_item">
-        <div class="cart_item_img">
-            <img src="${imgSrc}" alt="${title}">
-        </div>
-        <p class="cart_item_name">${title}</p>
-        <div class="cart_qty">
-            <input class="qty_holder" type="number" min"1" value="1">
-        </div>
-        <p class="cat_item_price">${price}</p>  
-        </p>
-        <i class="ri-delete-bin-6-fill remove_item"></i>
-        </div>
+        let cartContent = 
         `
+            <div class="cart_item">
+            <div class="cart_item_img">
+            <img src="${imgSrc}" alt="${title}">
+            </div>
+            <p class="cart_item_name">${title}</p>
+            <div class="cart_qty">
+            <input class="qty_holder" type="number" min="1" value="1">
+            </div>
+            <p class="cat_item_price">${price}</p>  
+            </p>
+            <i class="ri-delete-bin-6-fill remove_item"></i>
+            </div>
+        `
+        cartContainer.append(cartRow);
         cartRow.innerHTML = cartContent;
+        cartRow.getElementsByClassName('qty_holder')[0].addEventListener('change', quantityChanged);
     }
-    // function updateTotalPriceDisplay() {
-    //     const totalPriceElement = document.querySelector('.cart_total');
-    //     console.log(totalPrice);
-    //     totalPriceElement.textContent = `₹${totalPrice.toFixed(2)}`;
-    // }
 
-    // cart item remove function
-    cartPage.addEventListener("click", function (event) {
-        const qtyInput = event.target.parentElement.querySelector(".qty_holder");
-        const currentValue = parseInt(qtyInput.value);
-        // cartItemRemoveFunction();
-        // const cartItemRemoveFunction = function () {
-            if (event.target.classList.contains("remove_item")) {
-                // Remove the cart item from the DOM
-                let cartItem = event.target.parentElement
-                cartItem.remove();
-            } 
-            if (currentValue < 1) {
-                let cartItem = event.target.parentElement.parentElement
-                cartItem.remove();
-            }
-            // if (event.target.classList.contains("qty_holder")) {
-            //     updateTotalPrice();
-            // }
-        // }
-        // cartItemRemoveFunction();
-
-    });
-
-
-
-    // function updateTotalPrice() {
-    //     totalPrice = 0;
-    //     const quantityInputs = document.querySelectorAll(".qty_holder");
-    //     quantityInputs.forEach(input => {
-    //         // const productRow = input.closest(".cart_row");
-    //         const productRow = input.parentElement.parentElement; // Get the parent cart_item
-    //         const productPriceElement = productRow.querySelector(".cat_item_price");
-    //         const productPrice = parseFloat(productPriceElement.textContent.replace('₹', ''));
-    //         const productQuantity = parseInt(input.value);
-    //         const productTotalPrice = productPrice * productQuantity;
-    //         totalPrice += productTotalPrice;
-    //         // Update the displayed price for the item in the cart
-    //         productPriceElement.textContent = `₹${productTotalPrice.toFixed(2)}`;
-    //     });
-
-    //     // Update the total price display
-    //     updateTotalPriceDisplay();
-    // }
-
-}
+    function quantityChanged(event) {
+        let input = event.target;
+        if (isNaN(input.value) || input.value <= 0) {
+            input.value = 1;
+        }
+        updateCartTotal();
+    }
 
 
     // Function to update the total price when quantity changes
     function updateCartTotal(){
         let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
+        console.log(cartItemContainer);
         let cartRows = cartItemContainer.getElementsByClassName("cart_item");
         let total = 0;
         for (let i = 0; i < cartRows.length; i++) {
             let cartRow = cartRows[i];
+            console.log(cartRow);
             let priceElement = cartRow.getElementsByClassName("cat_item_price")[0];
             let quantityElement = cartRow.getElementsByClassName("qty_holder")[0];
             let price = parseFloat(priceElement.innerText.replace("₹", ""));
@@ -140,26 +108,27 @@ function ready() {
             total = total + (price * quantity);
         }
         total = Math.round(total * 100) / 100;
-        document.getElementsByClassName("cart_total")[0].innerText = "₹" + total;
+        // document.getElementsByClassName("cart_total").innerText = "₹" + total;
+        let cartTotal = document.getElementsByClassName("cart_total")[0];
+        console.log(cartTotal);
+        cartTotal.textContent= `₹${total}`
+        console.log(total);
     }
     updateCartTotal();
 
+    
+        // cart page opening and closing function
+        const cartPageToggle = function () {
+            cartPage.classList.toggle("hidden");
+            htmlBody.classList.toggle("o_hidden");
 
-
-
-// cart page opening and closing function
-const cartPageToggle = function () {
-    cartPage.classList.toggle("hidden");
-    htmlBody.classList.toggle("o_hidden");
-
-}
-const cartToggleArr = [cartButton, cartCloseButton, cartOverlay,]
-for (let i = 0; i < cartToggleArr.length; i++) {
-    cartToggleArr[i].addEventListener("click", () => {
-        cartPageToggle()
-    })
-}
-
+        }
+        const cartToggleArr = [cartButton, cartCloseButton, cartOverlay]
+        for (let i = 0; i < cartToggleArr.length; i++) {
+            cartToggleArr[i].addEventListener("click", () => {
+                cartPageToggle()
+            })
+        }
 
 
 
