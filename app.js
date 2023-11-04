@@ -28,15 +28,17 @@ function ready() {
         button = addToCartButton[i];
         button.addEventListener("click", addedToCart);
     }
+    loadCartItem()
 
     // cart item remove function
     cartPage.addEventListener("click", function (event) {
-            if (event.target.classList.contains("remove_item")) {
-                // Remove the cart item from the DOM
-                let cartItem = event.target.parentElement
-                cartItem.remove();
-                updateCartTotal();
-            }
+        if (event.target.classList.contains("remove_item")) {
+            // Remove the cart item from the DOM
+            let cartItem = event.target.parentElement
+            cartItem.remove();
+            updateCartTotal();
+            saveCartItem();
+        }
     });
 
     let cartQty = document.getElementsByClassName("qty_holder");
@@ -48,22 +50,23 @@ function ready() {
 } // end of ready function
 
 
-    function addedToCart(event) {
-        let button = event.target;
-        let shopProducts = button.parentElement;
-        let cartItemName = shopProducts.getElementsByClassName("product_title")[0].innerText.split(' ').slice(0, 4).join(' ');
-        let title = cartItemName;
-        let price = shopProducts.getElementsByClassName("price")[0].innerText;
-        let imgSrc = shopProducts.getElementsByClassName("product_img")[0].src;
-        addItemToCart(title, price, imgSrc);
-        updateCartTotal();
-    }
+function addedToCart(event) {
+    let button = event.target;
+    let shopProducts = button.parentElement;
+    let cartItemName = shopProducts.getElementsByClassName("product_title")[0].innerText.split(' ').slice(0, 4).join(' ');
+    let title = cartItemName;
+    let price = shopProducts.getElementsByClassName("price")[0].innerText;
+    let imgSrc = shopProducts.getElementsByClassName("product_img")[0].src;
+    addItemToCart(title, price, imgSrc);
+    updateCartTotal();
+    saveCartItem();
+}
 
-    function addItemToCart(title, price, imgSrc) {
-        let cartRow = document.createElement("div");
-        // document.getElementsByClassName("cart_items")[0];
-        let cartContainer = document.getElementsByClassName("cart_item_container")[0]
-        let cartContent = 
+function addItemToCart(title, price, imgSrc) {
+    let cartRow = document.createElement("div");
+    // document.getElementsByClassName("cart_items")[0];
+    let cartContainer = document.getElementsByClassName("cart_item_container")[0]
+    let cartContent =
         `
             <div class="cart_item">
             <div class="cart_item_img">
@@ -78,59 +81,97 @@ function ready() {
             <i class="ri-delete-bin-6-fill remove_item"></i>
             </div>
         `
-        cartContainer.append(cartRow);
-        cartRow.innerHTML = cartContent;
-        cartRow.getElementsByClassName('qty_holder')[0].addEventListener('change', quantityChanged);
-    }
+    cartContainer.append(cartRow);
+    cartRow.innerHTML = cartContent;
+    cartRow.getElementsByClassName('qty_holder')[0].addEventListener('change', quantityChanged);
+    saveCartItem();
+}
 
-    function quantityChanged(event) {
-        let input = event.target;
-        if (isNaN(input.value) || input.value <= 0) {
-            input.value = 1;
-        }
-        updateCartTotal();
-    }
-
-
-    // Function to update the total price when quantity changes
-    function updateCartTotal(){
-        let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
-        console.log(cartItemContainer);
-        let cartRows = cartItemContainer.getElementsByClassName("cart_item");
-        let total = 0;
-        for (let i = 0; i < cartRows.length; i++) {
-            let cartRow = cartRows[i];
-            console.log(cartRow);
-            let priceElement = cartRow.getElementsByClassName("cat_item_price")[0];
-            let quantityElement = cartRow.getElementsByClassName("qty_holder")[0];
-            let price = parseFloat(priceElement.innerText.replace("₹", ""));
-            let quantity = quantityElement.value;
-            total = total + (price * quantity);
-        }
-        total = Math.round(total * 100) / 100;
-        // document.getElementsByClassName("cart_total").innerText = "₹" + total;
-        let cartTotal = document.getElementsByClassName("cart_total")[0];
-        console.log(cartTotal);
-        cartTotal.textContent= `₹${total}`
-        console.log(total);
+function quantityChanged(event) {
+    let input = event.target;
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1;
     }
     updateCartTotal();
+}
 
-    
-        // cart page opening and closing function
-        const cartPageToggle = function () {
-            cartPage.classList.toggle("hidden");
-            htmlBody.classList.toggle("o_hidden");
 
+// Function to update the total price when quantity changes
+function updateCartTotal() {
+    let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
+    console.log(cartItemContainer);
+    let cartRows = cartItemContainer.getElementsByClassName("cart_item");
+    let total = 0;
+    for (let i = 0; i < cartRows.length; i++) {
+        let cartRow = cartRows[i];
+        console.log(cartRow);
+        let priceElement = cartRow.getElementsByClassName("cat_item_price")[0];
+        let quantityElement = cartRow.getElementsByClassName("qty_holder")[0];
+        let price = parseFloat(priceElement.innerText.replace("₹", ""));
+        let quantity = quantityElement.value;
+        total = total + (price * quantity);
+    }
+    total = Math.round(total * 100) / 100;
+    // document.getElementsByClassName("cart_total").innerText = "₹" + total;
+    let cartTotal = document.getElementsByClassName("cart_total")[0];
+    console.log(cartTotal);
+    cartTotal.textContent = `Cart Total ₹${total}`
+    console.log(total);
+    localStorage.setItem("cartTotal", total)
+}
+updateCartTotal();
+
+
+// cart page opening and closing function
+const cartPageToggle = function () {
+    cartPage.classList.toggle("hidden");
+    htmlBody.classList.toggle("o_hidden");
+
+}
+const cartToggleArr = [cartButton, cartCloseButton, cartOverlay]
+for (let i = 0; i < cartToggleArr.length; i++) {
+    cartToggleArr[i].addEventListener("click", () => {
+        cartPageToggle()
+    })
+}
+
+// save the cart item in local storage
+function saveCartItem() {
+    let cartItem = document.getElementsByClassName("cart_item");
+    let cartItemArray = [];
+    for (let i = 0; i < cartItem.length; i++) {
+        let cartItemObj = {
+            title: cartItem[i].getElementsByClassName("cart_item_name")[0].innerText,
+            price: cartItem[i].getElementsByClassName("cat_item_price")[0].innerText,
+            imgSrc: cartItem[i].getElementsByClassName("cart_item_img")[0].getElementsByTagName("img")[0].src,
+            quantity: cartItem[i].getElementsByClassName("qty_holder")[0].value
         }
-        const cartToggleArr = [cartButton, cartCloseButton, cartOverlay]
-        for (let i = 0; i < cartToggleArr.length; i++) {
-            cartToggleArr[i].addEventListener("click", () => {
-                cartPageToggle()
-            })
+        cartItemArray.push(cartItemObj);
+    }
+    localStorage.setItem("cartItem", JSON.stringify(cartItemArray));
+
+}
+
+// load in cart
+
+function loadCartItem() {
+    if (cartItem) {
+        let cartItem = JSON.parse(localStorage.getItem("cartItem"));
+        for (let i = 0; i < cartItem.length; i++) {
+            let item = cartItem[i]
+            addItemToCart(item[i].title, item[i].price, item[i].imgSrc);
+            let cartItems = document.getElementsByClassName('cart_item');
+            let cartItem = cartItems[cartItems.length - 1];
+            let cartQty = cartItem.getElementsByClassName('qty_holder')[0];
+            cartQty.value = cartItem.quantity;
         }
+    }
+    let cartTotal = localStorage.getItem("cartTotal");
+    if (cartTotal) {
+        document.getElementsByClassName("cart_total")[0].textContent = `Cart Total ₹${cartTotal}`
 
-
+    }
+}
 
 
 
