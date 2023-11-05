@@ -28,6 +28,7 @@ function ready() {
         button = addToCartButton[i];
         button.addEventListener("click", addedToCart);
     }
+
     loadCartItem()
 
     // cart item remove function
@@ -46,6 +47,8 @@ function ready() {
         let input = cartQty[i];
         input.addEventListener("change", quantityChanged);
     }
+
+
 
 } // end of ready function
 
@@ -99,12 +102,10 @@ function quantityChanged(event) {
 // Function to update the total price when quantity changes
 function updateCartTotal() {
     let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
-    console.log(cartItemContainer);
     let cartRows = cartItemContainer.getElementsByClassName("cart_item");
     let total = 0;
     for (let i = 0; i < cartRows.length; i++) {
         let cartRow = cartRows[i];
-        console.log(cartRow);
         let priceElement = cartRow.getElementsByClassName("cat_item_price")[0];
         let quantityElement = cartRow.getElementsByClassName("qty_holder")[0];
         let price = parseFloat(priceElement.innerText.replace("₹", ""));
@@ -114,9 +115,7 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100;
     // document.getElementsByClassName("cart_total").innerText = "₹" + total;
     let cartTotal = document.getElementsByClassName("cart_total")[0];
-    console.log(cartTotal);
     cartTotal.textContent = `Cart Total ₹${total}`
-    console.log(total);
     localStorage.setItem("cartTotal", total)
 }
 updateCartTotal();
@@ -136,6 +135,8 @@ for (let i = 0; i < cartToggleArr.length; i++) {
 }
 
 // save the cart item in local storage
+let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
+let cartItem = cartItemContainer.getElementsByClassName("cart_item");
 function saveCartItem() {
     let cartItem = document.getElementsByClassName("cart_item");
     let cartItemArray = [];
@@ -148,28 +149,46 @@ function saveCartItem() {
         }
         cartItemArray.push(cartItemObj);
     }
+    console.log(cartItemArray);
     localStorage.setItem("cartItem", JSON.stringify(cartItemArray));
 
 }
 
 // load in cart
 
+// function loadCartItem() {
+//     if (cartItem) {
+//         // let cartItem = JSON.parse(localStorage.getItem("cartItem"));
+//         for (let i = 0; i < cartItem.length; i++) {
+//             let item = cartItem[i]
+//             addItemToCart(item[i].title, item[i].price, item[i].imgSrc);
+//             let cartItems = document.getElementsByClassName('cart_item');
+//             let cartItem = cartItems[cartItems.length - 1];
+//             let cartQty = cartItem.getElementsByClassName('qty_holder')[0];
+//             cartQty.value = cartItem.quantity;
+//         }
+//     }
+//     let cartTotal = localStorage.getItem("cartTotal");
+//     if (cartTotal) {
+//         document.getElementsByClassName("cart_total")[0].textContent = `Cart Total ₹${cartTotal}`
+
+//     }
+// }
+
 function loadCartItem() {
     if (cartItem) {
-        let cartItem = JSON.parse(localStorage.getItem("cartItem"));
         for (let i = 0; i < cartItem.length; i++) {
-            let item = cartItem[i]
-            addItemToCart(item[i].title, item[i].price, item[i].imgSrc);
+            let item = cartItem[i];
+            addItemToCart(item.title, item.price, item.imgSrc);
             let cartItems = document.getElementsByClassName('cart_item');
             let cartItem = cartItems[cartItems.length - 1];
             let cartQty = cartItem.getElementsByClassName('qty_holder')[0];
-            cartQty.value = cartItem.quantity;
+            cartQty.value = item.quantity;
         }
     }
     let cartTotal = localStorage.getItem("cartTotal");
     if (cartTotal) {
-        document.getElementsByClassName("cart_total")[0].textContent = `Cart Total ₹${cartTotal}`
-
+        document.getElementsByClassName("cart_total")[0].textContent = `Cart Total ₹${cartTotal}`;
     }
 }
 
