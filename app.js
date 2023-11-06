@@ -29,8 +29,7 @@ function ready() {
         button.addEventListener("click", addedToCart);
     }
 
-    loadCartItem()
-
+    
     // cart item remove function
     cartPage.addEventListener("click", function (event) {
         if (event.target.classList.contains("remove_item")) {
@@ -41,13 +40,18 @@ function ready() {
             saveCartItem();
         }
     });
-
+    
+    // change qty function
     let cartQty = document.getElementsByClassName("qty_holder");
     for (let i = 0; i < cartQty.length; i++) {
         let input = cartQty[i];
         input.addEventListener("change", quantityChanged);
-    }
+        updateCartTotal();
+        saveCartItem();
 
+    }
+    
+    loadCartItem()
 
 
 } // end of ready function
@@ -87,7 +91,6 @@ function addItemToCart(title, price, imgSrc) {
     cartContainer.append(cartRow);
     cartRow.innerHTML = cartContent;
     cartRow.getElementsByClassName('qty_holder')[0].addEventListener('change', quantityChanged);
-    saveCartItem();
 }
 
 function quantityChanged(event) {
@@ -135,54 +138,36 @@ for (let i = 0; i < cartToggleArr.length; i++) {
 }
 
 // save the cart item in local storage
-let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
-let cartItem = cartItemContainer.getElementsByClassName("cart_item");
 function saveCartItem() {
-    let cartItem = document.getElementsByClassName("cart_item");
-    let cartItemArray = [];
-    for (let i = 0; i < cartItem.length; i++) {
+    let cartItemContainer = document.getElementsByClassName("cart_item_container")[0];
+    let cartItemElements = cartItemContainer.getElementsByClassName("cart_item");
+    let cartItems = [];
+    for (let i = 0; i < cartItemElements.length; i++) {
         let cartItemObj = {
-            title: cartItem[i].getElementsByClassName("cart_item_name")[0].innerText,
-            price: cartItem[i].getElementsByClassName("cat_item_price")[0].innerText,
-            imgSrc: cartItem[i].getElementsByClassName("cart_item_img")[0].getElementsByTagName("img")[0].src,
-            quantity: cartItem[i].getElementsByClassName("qty_holder")[0].value
+            title: cartItemElements[i].getElementsByClassName("cart_item_name")[0].innerText,
+            price: cartItemElements[i].getElementsByClassName("cat_item_price")[0].innerText,
+            imgSrc: cartItemElements[i].getElementsByClassName("cart_item_img")[0].getElementsByTagName("img")[0].src,
+            quantity: cartItemElements[i].getElementsByClassName("qty_holder")[0].value
         }
-        cartItemArray.push(cartItemObj);
+        cartItems.push(cartItemObj);
     }
-    console.log(cartItemArray);
-    localStorage.setItem("cartItem", JSON.stringify(cartItemArray));
+    // console.log(cartItemArray);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
 }
 
-// load in cart
-
-// function loadCartItem() {
-//     if (cartItem) {
-//         // let cartItem = JSON.parse(localStorage.getItem("cartItem"));
-//         for (let i = 0; i < cartItem.length; i++) {
-//             let item = cartItem[i]
-//             addItemToCart(item[i].title, item[i].price, item[i].imgSrc);
-//             let cartItems = document.getElementsByClassName('cart_item');
-//             let cartItem = cartItems[cartItems.length - 1];
-//             let cartQty = cartItem.getElementsByClassName('qty_holder')[0];
-//             cartQty.value = cartItem.quantity;
-//         }
-//     }
-//     let cartTotal = localStorage.getItem("cartTotal");
-//     if (cartTotal) {
-//         document.getElementsByClassName("cart_total")[0].textContent = `Cart Total ₹${cartTotal}`
-
-//     }
-// }
 
 function loadCartItem() {
-    if (cartItem) {
-        for (let i = 0; i < cartItem.length; i++) {
-            let item = cartItem[i];
+    let cartItems = localStorage.getItem('cartItems');
+    console.log(cartItems);
+    if (cartItems) {
+        cartItems = JSON.parse(cartItems);
+        for (let i = 0; i < cartItems.length; i++) {
+            let item = cartItems[i];
             addItemToCart(item.title, item.price, item.imgSrc);
-            let cartItems = document.getElementsByClassName('cart_item');
-            let cartItem = cartItems[cartItems.length - 1];
-            let cartQty = cartItem.getElementsByClassName('qty_holder')[0];
+            let cartItemElements = document.getElementsByClassName('cart_item');
+            let cartItemElement = cartItemElements[cartItemElements.length - 1];
+            let cartQty = cartItemElement.getElementsByClassName('qty_holder')[0];
             cartQty.value = item.quantity;
         }
     }
