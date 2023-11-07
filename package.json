@@ -1,0 +1,27 @@
+{
+  "name": "js_ecommerse_site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manojooo7/JS_ecommerse_site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Manojooo7/JS_ecommerse_site/issues"
+  },
+  "homepage": "https://github.com/Manojooo7/JS_ecommerse_site#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express.js": "^1.0.0",
+    "nodemon": "^3.0.1",
+    "stripe": "^14.3.0"
+  }
+}

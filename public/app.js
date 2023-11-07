@@ -29,7 +29,7 @@ function ready() {
         button.addEventListener("click", addedToCart);
     }
 
-    
+
     // cart item remove function
     cartPage.addEventListener("click", function (event) {
         if (event.target.classList.contains("remove_item")) {
@@ -40,7 +40,7 @@ function ready() {
             saveCartItem();
         }
     });
-    
+
     // change qty function
     let cartQty = document.getElementsByClassName("qty_holder");
     for (let i = 0; i < cartQty.length; i++) {
@@ -50,7 +50,7 @@ function ready() {
         saveCartItem();
 
     }
-    
+
     loadCartItem()
 
 
@@ -153,13 +153,14 @@ function saveCartItem() {
     }
     // console.log(cartItemArray);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    updateCartTotal();
 
 }
 
 
 function loadCartItem() {
     let cartItems = localStorage.getItem('cartItems');
-    console.log(cartItems);
+    // console.log(cartItems);
     if (cartItems) {
         cartItems = JSON.parse(cartItems);
         for (let i = 0; i < cartItems.length; i++) {
@@ -175,6 +176,7 @@ function loadCartItem() {
     if (cartTotal) {
         document.getElementsByClassName("cart_total")[0].textContent = `Cart Total ₹${cartTotal}`;
     }
+    updateCartTotal();
 }
 
 

@@ -385,3 +385,20 @@ span{
     color: #fff;
     cursor: pointer;
 }
+
+
+/* after payemnt Page */
+
+.afterPaymentContainer{
+    position: relative;
+}
+
+.wrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50% , -50%);
+    height: 70vh;
+    width: 40vw;
+    background-color: red;
+}
