@@ -387,18 +387,55 @@ span{
 }
 
 
-/* after payemnt Page */
+/* after payment Page */
+/* success and cancel page */
+
 
 .afterPaymentContainer{
-    position: relative;
-}
-
-.wrapper{
     position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-50% , -50%);
-    height: 70vh;
-    width: 40vw;
-    background-color: red;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30vw;
+    height: 50vh;
+    background-color: rgb(0, 0, 0);
+    border-radius: 20px;
+}
+.success, .cancel{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    color: #fff;
+
+}
+.ri-check-line{
+    font-size: 7rem;
+    color: #fff;
+    width: 20rem;
+    height: 20rem;
+    background-color: #a9e912;
+    border-radius: 50%;
+}
+.ri-close-line{
+    font-size: 7rem;
+    color: #fff;
+    width: 20rem;
+    height: 20rem;
+    background-color: #e93212;
+    border-radius: 50%;
+}
+.afterPaymentStatus{
+    font-size: 3rem;
+    margin-top: 20px;
+}
+.afterPaymentText{
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+.backToHome{
+    margin-top: 30px;
 }
