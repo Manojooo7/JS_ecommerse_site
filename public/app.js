@@ -132,9 +132,7 @@ const cartPageToggle = function () {
 }
 const cartToggleArr = [cartButton, cartCloseButton, cartOverlay]
 for (let i = 0; i < cartToggleArr.length; i++) {
-    cartToggleArr[i].addEventListener("click", () => {
-        cartPageToggle()
-    })
+    cartToggleArr[i].addEventListener("click", cartPageToggle)
 }
 
 // save the cart item in local storage
